@@ -11,7 +11,7 @@ import random
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
-DATA_FILE = "data.json"
+DATA_FILE = "data/data.json"
 
 
 def load_data() -> List[dict]:
