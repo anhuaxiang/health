@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>健康数据图表</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="date"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 6px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 18px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .chart-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+<h1>血糖 & 尿酸 图表</h1>
+
+<!-- 图表在最上方 -->
+<div class="chart-container">
+    {{ plot_div | safe }}
+</div>
+
+<!-- 中间：复选框控制显示 -->
+<form method="get" action="/">
+    <div class="checkbox-group">
+        <label>
+          <input type="checkbox" name="show_glucose" value="true" {% if show_glucose is not none and show_glucose %}checked{% endif %}> 显示血糖
+        </label>
+        <label>
+          <input type="checkbox" name="show_uric" value="true" {% if show_uric is not none and show_uric %}checked{% endif %}> 显示尿酸
+        </label>
+    </div>
+    <button type="submit">更新图表</button>
+</form>
+
+<!-- 最下方：添加数据 -->
+<form method="post" action="/add">
+    <label>日期:
+        <input type="date" name="date" required>
+    </label>
+
+    <label>血糖 (mmol/L):
+        <input type="number" name="glucose" step="0.1" required>
+    </label>
+
+    <label>尿酸 (μmol/L):
+        <input type="number" name="uric_acid" step="1" required>
+    </label>
+
+    <button type="submit">添加数据</button>
+  </form>
+</body>
+</html>
