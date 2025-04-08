@@ -41,6 +41,15 @@
             box-sizing: border-box;
         }
 
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
         input[type="checkbox"] {
             margin-right: 6px;
         }
@@ -110,7 +119,9 @@
     <label>尿酸 (μmol/L):
         <input type="number" name="uric_acid" step="1" required>
     </label>
-
+    <label>访问密码:
+        <input type="password" name="password" required>
+    </label>
     <button type="submit">添加数据</button>
   </form>
 </body>

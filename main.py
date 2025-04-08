@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
@@ -7,7 +9,7 @@ import plotly.graph_objs as go
 from plotly.subplots import make_subplots
 from typing import List, Optional
 import uvicorn
-import random
+
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -80,8 +82,13 @@ async def index(
 async def add_data(
         date: str = Form(...),
         glucose: float = Form(...),
-        uric_acid: float = Form(...)
+        uric_acid: float = Form(...),
+        password: str = Form(...),
 ):
+    now = datetime.now().strftime("%Y%m%d")
+    if password != f"{now}{os.environ.get('PASSWORD')}":
+        return HTMLResponse("<h3>密码错误，添加失败！</h3><a href='/'>返回</a>", status_code=401)
+
     data = load_data()
     data.append({
         "date": date,
