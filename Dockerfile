@@ -1,6 +1,8 @@
 FROM registry.cn-hangzhou.aliyuncs.com/anhuaxiang/python:3.11
 
-RUN pip install poetry && poetry install --no-root
+
 WORKDIR /workspace
+COPY requirements.txt requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.aliyun.com/simple
 COPY . .
-CMD ["poetry", "run", "python", "-m", "main.app"]
+CMD ["python", "main.py"]
